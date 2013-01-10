@@ -30,6 +30,15 @@
     (concat (getenv "HOME")  (match-string 1 jar)))
    (:else jar)))
 
+(defun nrepl-maybe-local-m2-resource (jar)
+  (cond 
+   ((file-exists-p jar) jar)
+   ((string-match "^.+\\(\\/.m2.+\\)" jar)
+    (let ((local-jar (concat (getenv "HOME")  (match-string 1 jar))))
+      (if (file-exists-p local-jar) local-jar jar)))
+   (t jar)))
+
+
 (defun nrepl-find-resource (resource)
   (cond ((string-match "^file:\\(.+\\)" resource)
          (find-file (match-string 1 resource)))

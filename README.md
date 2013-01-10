@@ -81,6 +81,8 @@ If HOME is defined on the platform then we can use this function to modify the r
    (:else jar)))
 ```
 
+It should be noted, that `HOME` has to be defined on windows for this to work in the current form.
+
 nrepl.el.0.1.5:nrepl-find-resource will then need to be modified
 
 ```lisp
