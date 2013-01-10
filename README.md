@@ -59,6 +59,33 @@ Is it correct to refer to clojure.core and other jar files on the local host (an
 
 In short; the path to the source has to be classpath and host/user aware in some way for lookup in jar files to work.
 
+### nrepl-maybe-local-m2-resource
+
+If the resource looked up on the remote host is present on the local host, we can disregard the remote and just read the resource from localhost.
+
+If HOME is defined on the platform then we can use this function to modify the resource location befor handing the result over to a `find-file` type function
+
+```lisp
+(defun nrepl-maybe-local-m2-resource (jar)
+  (cond 
+   ((file-exists-p jar) jar)
+   ((string-match "^.+\\(\\/.m2.+\\)" jar)
+    (concat (getenv "HOME")  (match-string 1 jar)))
+   (:else jar)))
+```
+
+nrepl.el.0.1.5:nrepl-find-resource will then need to be modified
+
+```lisp
+(find-file (nrepl-maybe-local-m2-resource jar))
+```
+
+or in the current head of master, where somebody has been fixing something windows related
+
+```lisp
+(nrepl-find-file (nrepl-maybe-local-m2-resource jar))
+```
+
 ## remote connecting to swank (via slime)
 
 M-. runs the command slime-edit-definition

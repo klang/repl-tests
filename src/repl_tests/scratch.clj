@@ -41,6 +41,7 @@
   (clojure.core/comp clojure.core/str clojure.java.io/resource :file)
   (clojure.core/comp clojure.core/str clojure.java.io/file :file) :line)
  (clojure.core/meta (clojure.core/ns-resolve 'repl-tests.scratch 'map)))
+
 ["jar:file:/home/klang/.m2/repository/org/clojure/clojure/1.4.0/clojure-1.4.0.jar!/clojure/core.clj" "clojure/core.clj" 2416]
 
 ((clojure.core/juxt
