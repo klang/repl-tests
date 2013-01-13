@@ -76,3 +76,9 @@
              (when (not buffer-already-open)
                (kill-buffer opened-buffer)))))
         (:else (error "Unknown resource path %s" resource))))
+
+
+(push (slime-create-filename-translator :machine-instance "remote.example.com"
+					:remote-host "remote"
+					:username "user")
+      slime-filename-translations)

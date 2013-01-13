@@ -10,6 +10,19 @@
   (comp clojure.core/str clojure.java.io/file :file) :line)
  (clojure.core/meta (clojure.core/resolve 'map)))
 
+(clojure.core/vec 
+ (clojure.core/concat 
+  ((clojure.core/juxt
+    (comp clojure.core/str clojure.java.io/resource :file)
+    (comp clojure.core/str clojure.java.io/file :file) :line)
+   (clojure.core/meta (clojure.core/resolve 'recur)))
+  [(System/getProperty "user.name")
+   (.getHostAddress (java.net.InetAddress/getLocalHost))]))
+
+(vec (concat [1 2 3] [4 5 6]))
+
+(.getHostName (java.net.InetAddress/getLocalHost))
+
 ;; local unix host
 ["jar:file:/home/klang/.m2/repository/org/clojure/clojure/1.4.0/clojure-1.4.0.jar!/clojure/core.clj" "clojure/core.clj" 2416]
 
@@ -51,3 +64,24 @@
 
 ["" "/ssh:klang@192.168.1.9:/Users/klang/Dropbox/repos/nonrepo/repl-tests/src/repl_tests/jump_here.clj" 3]
 
+(clojure.core/vec 
+ (clojure.core/concat 
+  ((clojure.core/juxt
+    (comp clojure.core/str clojure.java.io/resource :file)
+    (comp clojure.core/str clojure.java.io/file :file) :line)
+   (clojure.core/meta (clojure.core/resolve 'repl-tests.scratch 'map)))
+  [(System/getProperty "user.name")
+   (.getHostAddress (java.net.InetAddress/getLocalHost))]))
+
+["jar:file:/home/klang/.m2/repository/org/clojure/clojure/1.4.0/clojure-1.4.0.jar!/clojure/core.clj" "clojure/core.clj" 2416 "klang" "192.168.1.10"]
+
+;; constructed result:
+["jar:file:/ssh:klang@192.168.1.10:/Users/klang/.m2/repository/org/clojure/clojure/1.4.0/clojure-1.4.0.jar!/clojure/core.clj" "clojure/core.clj" 2416]
+
+
+
+;; the easiest fix: (on linux)
+;; sudo su -
+;; cd /
+;; ln -s home Users
+;; # make sure that your username is the same on both linux and mac
